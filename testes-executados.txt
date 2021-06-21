@@ -1,0 +1,6 @@
+Lutador (TDD\Rankings_TDD\Testes\Lutador)
+ [x] Deve adicionar um lutador com os dados validos
+ [x] Nao deve adicionar lutador com nome invalido
+ [x] Nao deve adicionar lutador com vitorias invalida
+ [x] Nao deve adicionar lutador com derrotas invalida
+
