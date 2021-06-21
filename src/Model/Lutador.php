@@ -10,13 +10,13 @@ class Lutador
     private string $ranking;
     
     
-    public function __construct($nome, $vitorias, $derrotas, $ranking)
-    {
-        $this->nome = $nome;
-        $this->$vitorias = $vitorias;
-        $this->derrotas = $derrotas;
-        $this->ranking = $ranking;
-    }
+    // public function __construct($nome, $vitorias, $derrotas, $ranking)
+    // {
+    //     $this->nome = $nome;
+    //     $this->$vitorias = $vitorias;
+    //     $this->derrotas = $derrotas;
+    //     $this->ranking = $ranking;
+    // }
     
     public function getNome()
     {
@@ -36,6 +36,17 @@ class Lutador
     public function getRanking()
     {
         return $this->ranking;
+    }
+    
+    public function addLutador($nome, $vitorias, $derrotas, $ranking)
+    {
+        if(is_string($nome) && strlen($nome) > 5) {
+            $this->nome = $nome;
+            $this->vitorias = $vitorias;
+            $this->derrotas = $derrotas;
+            $this->ranking = $ranking;
+            return $this;
+        }
     }
     
 }
