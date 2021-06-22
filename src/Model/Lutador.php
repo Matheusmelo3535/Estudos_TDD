@@ -47,13 +47,26 @@ class Lutador
     {
         return $this->created;
     }
-
     
+    public function validaEstatisticaLutador($vitorias, $derrotas, $ranking)
+    {
+        $rankingsValidos = ['C','1','2','3','4','5','6','7','8','9','10'];
+        if ((int)$vitorias > 0 && (int)$derrotas >= 0 && in_array($ranking, $rankingsValidos)) {
+            return true;
+        }
+        return false;
+    }
+    
+    public function validaNomeLutador($nome)
+    {
+        if (is_string(trim($nome)) && strlen(trim($nome)) > 5) {
+            return true;
+        }
+        return false;
+    }
     public function addLutador($nome, $vitorias, $derrotas, $ranking)
     {
-        //refatorar aqui, criar funções para validar
-        $rankingsDisponiveis = ['C', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
-        if(is_string(trim($nome)) && strlen(trim($nome)) > 5 && (int)$vitorias > 0 && (int)$derrotas >= 0 && in_array($rankingsDisponiveis, $ranking)) {
+        if($this->validaNomeLutador($nome) && $this->validaEstatisticaLutador($vitorias, $derrotas, $ranking)) {
             $this->nome = $nome;
             $this->vitorias = $vitorias;
             $this->derrotas = $derrotas;
