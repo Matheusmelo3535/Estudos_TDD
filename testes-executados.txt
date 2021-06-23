@@ -3,4 +3,9 @@ Lutador (TDD\Rankings_TDD\Testes\Lutador)
  [x] Nao deve adicionar lutador com nome invalido
  [x] Nao deve adicionar lutador com vitorias invalida
  [x] Nao deve adicionar lutador com derrotas invalida
+ [x] Nao deve adicionar lutador com atributos nulos
+ [x] Nao deve adicionar lutador com string vazia
+ [x] Nao deve adicionar lutador com ranking invalido valor limite 11
+ [x] Nao deve adicionar lutador com ranking invalido valor limite 0
+ [x] Lutador deve ser editado corretamente
 

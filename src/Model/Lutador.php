@@ -48,6 +48,11 @@ class Lutador
         return $this->created;
     }
     
+    public function getModified()
+    {
+        return $this->modified;
+    }
+    
     public function validaEstatisticaLutador($vitorias, $derrotas, $ranking)
     {
         $rankingsValidos = ['C','1','2','3','4','5','6','7','8','9','10'];
@@ -64,17 +69,36 @@ class Lutador
         }
         return false;
     }
-    public function addLutador($nome, $vitorias, $derrotas, $ranking)
+    
+    public function validacaoAntesDeSalvar($nome, $vitorias, $derrotas, $ranking)
     {
-        if($this->validaNomeLutador($nome) && $this->validaEstatisticaLutador($vitorias, $derrotas, $ranking)) {
+        if ($this->validaNomeLutador($nome) && $this->validaEstatisticaLutador($vitorias, $derrotas, $ranking)) {
             $this->nome = $nome;
             $this->vitorias = $vitorias;
             $this->derrotas = $derrotas;
             $this->ranking = $ranking;
+            return true;
+        }
+        return false;
+        
+    }
+    public function addLutador($nome, $vitorias, $derrotas, $ranking)
+    {
+        if ($this->validacaoAntesDeSalvar($nome, $vitorias, $derrotas, $ranking)) {
             $this->created = date('d-m-Y', time());
             return $this;
         }
         throw new Exception('Dados inválidos');
+    }
+    
+    public function editLutador($nome, $vitorias, $derrotas, $ranking)
+    {
+        if ($this->validacaoAntesDeSalvar($nome, $vitorias, $derrotas, $ranking)) {
+            $this->modified = date('d-m-Y', time());
+            return $this;
+        }
+        throw new Exception('Não foi possível editar, dados inválidos');
+        
     }
     
 }
