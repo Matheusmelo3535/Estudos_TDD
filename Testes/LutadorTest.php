@@ -69,14 +69,64 @@ class LutadorTest extends TestCase
         $this->lutador->addLutador('Tobias Maluco', '50', '5', '0');
     }
     
-    public function testLutadorDeveSerEditadoCorretamente()
+    /**
+     * @dataProvider lutadorProvider
+     */
+    public function testLutadorDeveSerEditadoCorretamente(Lutador $lutadorData)
     {
-        $this->lutador->addLutador('Jon Jones','29', '0', 'C');
-        $this->lutador->editLutador('Matheuszera', '30', '0', '1');
+        $lutadorData->editLutador('Matheuszera', '30', '0', '1');
         
-        self::assertEquals('Matheuszera',$this->lutador->getNome());
-        self::assertEquals(date('d-m-Y', time()), $this->lutador->getModified());
+        self::assertEquals(date('d-m-Y', time()), $lutadorData->getModified());
+        self::assertEquals('Matheuszera',$lutadorData->getNome());
     }
+
+    /**
+     * @dataProvider lutadorProviderUninitialized
+     */
+    public function testLutadorNaoPodeSerEditadoCasoObjetoEstejaVazio(Lutador $lutadorData)
+    {
+        $this->expectExceptionMessage('Dados inválidos');
+        $lutadorData->editLutador('Matheuszera', '30', '0', '1');
+        
+        
+    }
+
+    /**
+     * @dataProvider lutadorProvider
+     */
+    public function testLutadorDeveSerDeletadoCorretamente(Lutador $lutadorData)
+    {
+        $lutadorData->deleteLutador();
+
+        self::assertEquals(true, $lutadorData->getDeleted());
+    }
+
+    /**
+     * @dataProvider lutadorProviderUninitialized
+     */
+    public function testLutadorNaoDeveSerDeletadoCasoObjetoEstejaVazio(Lutador $lutadorData)
+    {
+        $this->expectExceptionMessage('Exclusão inválida!');
+        $lutadorData->deleteLutador();
+    }
+
+    public function lutadorProvider()
+    {
+        $lutadorData = new Lutador();
+        $lutadorData->addLutador('Robert Whittaker', '28', '4', 'C');
+        return [
+           'LutadorNormal' => [$lutadorData]
+        ];
+    }
+
+    public function lutadorProviderUninitialized()
+    {
+        $lutadorData = new Lutador();
+        return [
+            'LutadorUninitialized' => [$lutadorData]
+        ];
+    }
+    
 
     
 }

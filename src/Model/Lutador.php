@@ -3,7 +3,6 @@
 namespace TDD\Rankings_TDD\Model;
 use Exception;
 
-
 class Lutador
 {
     private string $nome;
@@ -12,16 +11,7 @@ class Lutador
     private string $ranking;
     private $created;
     private $modified;
-    private $deleted = false;
-    
-    
-    // public function __construct($nome, $vitorias, $derrotas, $ranking)
-    // {
-    //     $this->nome = $nome;
-    //     $this->$vitorias = $vitorias;
-    //     $this->derrotas = $derrotas;
-    //     $this->ranking = $ranking;
-    // }
+    private $deleted;
     
     public function getNome()
     {
@@ -51,6 +41,11 @@ class Lutador
     public function getModified()
     {
         return $this->modified;
+    }
+
+    public function getDeleted()
+    {
+        return $this->deleted;
     }
     
     public function validaEstatisticaLutador($vitorias, $derrotas, $ranking)
@@ -93,17 +88,21 @@ class Lutador
     
     public function editLutador($nome, $vitorias, $derrotas, $ranking)
     {
-        if ($this->validacaoAntesDeSalvar($nome, $vitorias, $derrotas, $ranking)) {
+        
+        if ($this->validacaoAntesDeSalvar($nome, $vitorias, $derrotas, $ranking) && isset($this->created)) {
             $this->modified = date('d-m-Y', time());
             return $this;
         }
-        throw new Exception('Não foi possível editar, dados inválidos');
+        throw new Exception('Dados inválidos');
         
     }
-    
+
+    public function deleteLutador()
+    {
+        if (isset($this->created)) {
+            $this->deleted = true;
+            return;
+        }
+        throw new Exception('Exclusão inválida!');
+    }
 }
-
-
-
-
-?>
