@@ -1,21 +1,31 @@
 <?php
-
 namespace TDD\Rankings_TDD\Model;
+use DateTime;
 use Exception;
+use TDD\Rankings_TDD\Model\EstatisticasLutador;
 
-class Lutador
+class Lutador 
 {
     private string $nome;
-    private string $vitorias;
-    private string $derrotas;
-    private string $ranking;
-    private $created;
-    private $modified;
-    private $deleted;
+    private EstatisticasLutador $estatisticas;
+    private DateTime $created;
+    private DateTime $modified;
+    private DateTime $deleted;
+    const rankingsValidos = ['C','1','2','3','4','5','6','7','8','9','10'];
+    
+    public function __construct(EstatisticasLutador $estatisticas)
+    {
+        $this->estatisticas = $estatisticas;
+    }
     
     public function getNome()
     {
         return $this->nome;
+    }
+    
+    public function getEstatisticas()
+    {
+        return $this->estatisticas;
     }
     
     public function getVitorias()
@@ -50,8 +60,8 @@ class Lutador
     
     public function validaEstatisticaLutador($vitorias, $derrotas, $ranking)
     {
-        $rankingsValidos = ['C','1','2','3','4','5','6','7','8','9','10'];
-        if ((int)$vitorias > 0 && (int)$derrotas >= 0 && in_array($ranking, $rankingsValidos)) {
+        
+        if ((int)$vitorias > 0 && (int)$derrotas >= 0 && in_array($ranking, self::rankingsValidos)) {
             return true;
         }
         return false;
