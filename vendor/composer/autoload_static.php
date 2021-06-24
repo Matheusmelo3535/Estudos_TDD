@@ -21,10 +21,6 @@ class ComposerStaticInit8483cdfb5949b08a5feaef774abd695e
         array (
             'Webmozart\\Assert\\' => 17,
         ),
-        'T' => 
-        array (
-            'TDD\\Rankings_TDD\\' => 17,
-        ),
         'S' => 
         array (
             'Symfony\\Polyfill\\Ctype\\' => 23,
@@ -32,6 +28,10 @@ class ComposerStaticInit8483cdfb5949b08a5feaef774abd695e
         'P' => 
         array (
             'Prophecy\\' => 9,
+        ),
+        'E' => 
+        array (
+            'Estudos_TDD\\' => 12,
         ),
         'D' => 
         array (
@@ -51,10 +51,6 @@ class ComposerStaticInit8483cdfb5949b08a5feaef774abd695e
         array (
             0 => __DIR__ . '/..' . '/webmozart/assert/src',
         ),
-        'TDD\\Rankings_TDD\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/src',
-        ),
         'Symfony\\Polyfill\\Ctype\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
@@ -62,6 +58,10 @@ class ComposerStaticInit8483cdfb5949b08a5feaef774abd695e
         'Prophecy\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpspec/prophecy/src/Prophecy',
+        ),
+        'Estudos_TDD\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src',
         ),
         'Doctrine\\Instantiator\\' => 
         array (

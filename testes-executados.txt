@@ -1,14 +1,3 @@
-Lutador (TDD\Rankings_TDD\Testes\Lutador)
- [x] Deve adicionar um lutador com os dados validos
- [x] Nao deve adicionar lutador com nome invalido
- [x] Nao deve adicionar lutador com vitorias invalida
- [x] Nao deve adicionar lutador com derrotas invalida
- [x] Nao deve adicionar lutador com atributos nulos
- [x] Nao deve adicionar lutador com string vazia
- [x] Nao deve adicionar lutador com ranking invalido valor limite 11
- [x] Nao deve adicionar lutador com ranking invalido valor limite 0
- [x] Lutador deve ser editado corretamente with data set "LutadorNormal"
- [x] Lutador nao pode ser editado caso objeto esteja vazio with data set "LutadorUninitialized"
- [x] Lutador deve ser deletado corretamente with data set "LutadorNormal"
- [x] Lutador nao deve ser deletado caso objeto esteja vazio with data set "LutadorUninitialized"
+Lutador (Estudos_TDD\Testes\Lutador)
+ [x] Blablabal
 

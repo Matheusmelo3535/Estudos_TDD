@@ -1,7 +1,7 @@
 {
     "autoload": {
         "psr-4": {
-            "TDD\\Rankings_TDD\\": "src/"
+            "Estudos_TDD\\": "src/"
         }
     },
     "require-dev": {

@@ -1,29 +1,62 @@
 <?php
-namespace TDD\Rankings_TDD\Model;
-use TDD\Rankings_TDD\Model\Lutador;
+
+namespace Estudos_TDD\Model;
+
 
 class CrudLutador
 {
-    public function validaNomeLutador(string $nomeLutador) 
+    public function validaNome(string $nomeLutador) 
     {
         return isset($nomeLutador) && strlen(trim($nomeLutador)) > 5;
     }
     
-    public function validaVitoriasLutador(string $vitoriasLutador)
+    public function validaVitorias(string $vitoriasLutador)
     {
         return isset($vitoriasLutador) && $vitoriasLutador > 0;
     }
     
-    public function validaDerrotasLutador(string $derrotasLutador)
+    public function validaDerrotas(string $derrotasLutador)
     {
         return isset($derrotasLutador) && $derrotasLutador >= 0;
     }
     
-    public function validaRankingLutador(Lutador $lutador)
+    public function validaRanking(string $rank)
     {
-        return $lutador->getEstatisticas()['ranking'];
+        return in_array($rank, Lutador::rankingsValidos);
     }
-    
+
+    public function validacaoAntesDeSalvar(Lutador $lutador)
+    {
+        $valido = true;
+        $nome = $lutador->getNome();
+        $vitorias = $lutador->getEstatisticas()->getVitorias();
+        $derrotas = $lutador->getEstatisticas()->getDerrotas();
+        $rank = $lutador->getEstatisticas()->getRank();
+        $validacao = [
+            'nome' => $this->validaNome($nome),
+            'vitorias' => $this->validaVitorias($vitorias),
+            'derrotas' => $this->validaDerrotas($derrotas),
+            'rank' => $this->validaRanking($rank)
+        ];
+
+        foreach ($validacao as $atributoLutador){
+           if (!$atributoLutador){
+                $valido = false;
+                return $valido; 
+           }
+        }
+
+        return $valido;
+
+        
+        
+    }
+
+    public function addLutador(Lutador $lutador)
+    {
+        return $this->validacaoAntesDeSalvar($lutador); 
+    }
+
 }
 
 ?>

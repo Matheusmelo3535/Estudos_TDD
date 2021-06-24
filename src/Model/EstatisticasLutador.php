@@ -1,11 +1,19 @@
 <?php
-namespace TDD\Rankings_TDD\Model;
+
+namespace Estudos_TDD\Model;
 
 class EstatisticasLutador
 {
     private string $vitorias;
     private string $derrotas;
     private string $rank;
+
+    public function __construct(string $vitorias, string $derrotas, string $rank)
+    {
+        $this->vitorias = $vitorias;
+        $this->derrotas = $derrotas;
+        $this->rank = $rank;
+    }
     
     public function getVitorias()
     {
@@ -37,8 +45,4 @@ class EstatisticasLutador
         $this->rank = $rank;
     }
 }
-
-
-
-
 ?>
