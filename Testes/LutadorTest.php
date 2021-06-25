@@ -9,17 +9,44 @@ use Estudos_TDD\Model\CrudLutador;
 
 class LutadorTest extends TestCase
 {
-    public function testblablabal()
+    /**
+     * @dataProvider lutadorValidoProvider
+     */
+    public function testChecarInstanciaLutador(Lutador $lutador)
     {
-        $est = new EstatisticasLutador('100', '0', 'C');
-        $lutador = new Lutador('Matheus', $est);
-        $crud = new CrudLutador();
-        $crud->addLutador($lutador);
+        $this->assertEquals(true, $lutador instanceof Lutador);
+    }
 
-        $this->assertEquals(true, $crud->addLutador($lutador));
+    public function testAdicionarLutadorComOsDadosValidos()
+    {}
 
+
+
+
+
+
+
+
+
+    public function lutadorValidoProvider()
+    {
+        $nome = 'Matheuszera';
+        $vitorias = '100';
+        $derrotas = '0';
+        $rank = 'C';
+        $estatisticas = new EstatisticasLutador($vitorias, $derrotas, $rank);
+        $lutador = new Lutador($nome, $estatisticas);
+
+        return [
+            'Lutador_Válido' => [$lutador]
+        ];
     }
     
 }
+
+
+
+
+
 
 ?>

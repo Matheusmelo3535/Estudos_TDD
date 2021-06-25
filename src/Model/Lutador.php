@@ -1,11 +1,7 @@
 <?php
 
 namespace Estudos_TDD\Model;
-
-
-
 use DateTime;
-
 
 class Lutador 
 {
@@ -26,27 +22,12 @@ class Lutador
     {
         return $this->nome;
     }
-    
+
     public function getEstatisticas()
     {
         return $this->estatisticas;
     }
     
-    public function getVitorias()
-    {
-        return $this->vitorias;
-    }
-    
-    public function getDerrotas()
-    {
-        return $this->derrotas;
-    }
-    
-    public function getRanking()
-    {
-        return $this->ranking;
-    }
-
     public function getCreated()
     {
         return $this->created;
@@ -61,7 +42,26 @@ class Lutador
     {
         return $this->deleted;
     }
-    
+
+    public function setNome(string $nome)
+    {
+        $this->nome = $nome;
+    }
+
+    public function setCreated(DateTime $created)
+    {
+        $this->created = $created;
+    }
+
+    public function setModified(DateTime $modified)
+    {
+        $this->modified = $modified;
+    }
+
+    public function setDeleted(DateTime $deleted)
+    {
+       $this->deleted = $deleted;
+    }
 }
 
 ?>

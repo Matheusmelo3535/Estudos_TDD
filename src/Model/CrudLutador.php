@@ -1,7 +1,8 @@
 <?php
 
 namespace Estudos_TDD\Model;
-
+use DateTime;
+use DateTimeZone;
 
 class CrudLutador
 {
@@ -22,7 +23,7 @@ class CrudLutador
     
     public function validaRanking(string $rank)
     {
-        return in_array($rank, Lutador::rankingsValidos);
+        return in_array(strtoupper($rank), Lutador::rankingsValidos);
     }
 
     public function validacaoAntesDeSalvar(Lutador $lutador)
@@ -42,21 +43,21 @@ class CrudLutador
         foreach ($validacao as $atributoLutador){
            if (!$atributoLutador){
                 $valido = false;
-                return $valido; 
+                
            }
         }
-
         return $valido;
-
-        
-        
     }
 
     public function addLutador(Lutador $lutador)
     {
-        return $this->validacaoAntesDeSalvar($lutador); 
+        $validacao = $this->validacaoAntesDeSalvar($lutador);
+        if ($validacao){
+            $dataCriacao = new DateTime('NOW');
+            $dataCriacao->setTimezone(new DateTimeZone('America/Sao_Paulo'));
+            $lutador->setCreated($dataCriacao);
+        }
+        return $validacao; 
     }
-
 }
-
 ?>
