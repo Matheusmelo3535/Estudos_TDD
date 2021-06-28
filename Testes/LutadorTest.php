@@ -9,6 +9,18 @@ use Estudos_TDD\Model\CrudLutador;
 
 class LutadorTest extends TestCase
 {
+    private CrudLutador $crud;
+
+    public function setUp(): void
+    {
+        $this->crud = new CrudLutador();
+    }
+
+    public function tearDown(): void
+    {
+        unset($this->crud);
+    }
+
     /**
      * @dataProvider lutadorValidoProvider
      */
@@ -17,11 +29,26 @@ class LutadorTest extends TestCase
         $this->assertEquals(true, $lutador instanceof Lutador);
     }
 
-    public function testAdicionarLutadorComOsDadosValidos()
-    {}
+    /**
+     * @dataProvider lutadorValidoProvider
+     */
+    public function testAdicionarLutadorComOsDadosValidos(Lutador $lutador)
+    {
+
+        $this->assertEquals(true, $this->crud->addLutador($lutador));
+        $this->assertEquals('Matheuszera', $lutador->getNome());
+    }
+
+    /**
+     * @dataProvider lutadorNomeInvalidoProvider
+     */
+    public function testDeveRetornarFalseLutadorComNomeInvalido(Lutador $lutador)
+    {
+        $this->assertEquals(false, $this->crud->addLutador($lutador));
+    }
 
 
-
+    
 
 
 
@@ -39,6 +66,20 @@ class LutadorTest extends TestCase
 
         return [
             'Lutador_Válido' => [$lutador]
+        ];
+    }
+
+    public function lutadorNomeInvalidoProvider()
+    {
+        $nome = 'M';
+        $vitorias = '10';
+        $derrotas = '1';
+        $rank = '9';
+        $estatisticas = new EstatisticasLutador($vitorias, $derrotas, $rank);
+        $lutador = new Lutador($nome, $estatisticas);
+
+        return [
+            'Lutador_Inválido' => [$lutador]
         ];
     }
     

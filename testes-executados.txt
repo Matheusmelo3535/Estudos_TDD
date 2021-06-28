@@ -1,3 +1,5 @@
 Lutador (Estudos_TDD\Testes\Lutador)
  [x] Checar instancia lutador with data set "Lutador_Válido"
+ [x] Adicionar lutador com os dados validos with data set "Lutador_Válido"
+ [x] Deve retornar false lutador com nome invalido with data set "Lutador_Inválido"
 
