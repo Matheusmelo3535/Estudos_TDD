@@ -1,5 +1,13 @@
 Lutador (Estudos_TDD\Testes\Lutador)
  [x] Checar instancia lutador with data set "Lutador_Válido"
  [x] Adicionar lutador com os dados validos with data set "Lutador_Válido"
- [x] Deve retornar false lutador com nome invalido with data set "Lutador_Inválido"
+ [x] Deve retornar false lutador com dados invalidos with data set "Lutador_NomeInválido"
+ [x] Deve retornar false lutador com dados invalidos with data set "Lutador_VitoriasInvalidas"
+ [x] Deve retornar false lutador com dados invalidos with data set "Lutador_DerrotasInvalidas"
+ [x] Deve retornar false lutador com dados invalidos with data set "Lutador_RankInvalido"
+ [x] Analise de valores limites para os atributos do lutador with data set "Lutador_Nome5Letras"
+ [x] Analise de valores limites para os atributos do lutador with data set "Lutador_ZeroVitorias"
+ [x] Analise de valor limite lutador com zero derrotas with data set "Lutador_ZeroDerrotas"
+ [x] Ranking lutador campeao passado com letra minuscula with data set "ranking_campeao_c_minusculo"
+ [x] Lutador vazio em branco with data set "LutadorVazio"
 

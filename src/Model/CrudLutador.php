@@ -6,6 +6,8 @@ use DateTimeZone;
 
 class CrudLutador
 {
+    private array $TabelaLutadores = [];
+
     public function validaNome(string $nomeLutador) 
     {
         return isset($nomeLutador) && strlen(trim($nomeLutador)) > 5;
@@ -23,7 +25,7 @@ class CrudLutador
     
     public function validaRanking(string $rank)
     {
-        return in_array(strtoupper($rank), Lutador::rankingsValidos);
+        return isset($rank) && in_array(strtoupper($rank), Lutador::rankingsValidos);
     }
 
     public function validacaoAntesDeSalvar(Lutador $lutador)
@@ -58,6 +60,16 @@ class CrudLutador
             $lutador->setCreated($dataCriacao);
         }
         return $validacao; 
+    }
+
+    public function readLutador(string $nomeLutador)
+    {
+        foreach ($this->TabelaLutadores as $lutador) {
+            if ($lutador->getNome() == $nomeLutador) {
+                
+            }
+
+        }
     }
 }
 ?>
