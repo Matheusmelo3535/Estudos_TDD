@@ -80,10 +80,12 @@ class CrudLutador
     public function readLutador(Lutador $lutador)
     {
         $lutadorEncontrado = '';
-        foreach ($this->TabelaLutadores as $entidadeLutador) {
-            if ($entidadeLutador->getNome() == $lutador->getNome()) {
-                $lutadorEncontrado = $lutador;
-                break;
+        if (sizeof($this->TabelaLutadores) > 0) {
+            foreach ($this->TabelaLutadores as $entidadeLutador) {
+                if ($entidadeLutador->getNome() == $lutador->getNome()) {
+                    $lutadorEncontrado = $lutador;
+                    break;
+                }
             }
         }
         return $lutadorEncontrado;
