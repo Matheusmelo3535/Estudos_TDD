@@ -9,5 +9,7 @@ Lutador (Estudos_TDD\Testes\Lutador)
  [x] Analise de valores limites para os atributos do lutador with data set "Lutador_ZeroVitorias"
  [x] Analise de valor limite lutador com zero derrotas with data set "Lutador_ZeroDerrotas"
  [x] Ranking lutador campeao passado com letra minuscula with data set "ranking_campeao_c_minusculo"
- [x] Lutador vazio em branco with data set "LutadorVazio"
+ [x] Nao deve add lutador vazio em branco with data set "LutadorVazio"
+ [x] Nao deve cadastrar lutadores repetidos with data set "Array_ComDoisLutadores"
+ [x] Read deve retornar um lutador corretamente with data set "Array_ComDoisLutadores"
 

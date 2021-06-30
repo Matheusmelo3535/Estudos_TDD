@@ -81,16 +81,35 @@ class LutadorTest extends TestCase
     /**
      * @dataProvider lutadorEmBrancoUninitialized
      */
-    public function testLutadorVazioEmBranco(Lutador $lutador)
+    public function testNaoDeveAddLutadorVazioEmBranco(Lutador $lutador)
     {
         $this->assertEquals(false, $this->crud->addLutador($lutador));
     }
 
-    public function testReadEmUmUnicoLutadorDeveRetornarCorretamente(array $arrayLutadores)
+    /**
+     * @dataProvider lutadorArrayProvider
+     */
+    public function testNaoDeveCadastrarLutadoresRepetidos(array $lutadores)
     {
-        
+        $this->crud->addLutador($lutadores[0]);
+        $this->assertEquals(false, $this->crud->addLutador($lutadores[1]));
     }
 
+    /**
+     * @dataProvider lutadorArrayProvider
+     */
+    public function testReadDeveRetornarUmLutadorCorretamente(array $lutadores)
+    {
+        $novoNome = 'MatheusJrJr';
+        $lutadores[1]->setNome($novoNome);
+        $this->crud->addLutador($lutadores[0]);
+        $this->crud->addLutador($lutadores[1]);
+        $tabelaLutador = $this->crud->getTabelaLutadores();
+        $lutadorFromRead = $this->crud->readLutador($tabelaLutador[1]);
+        $nomeLutadorEsperado = $lutadorFromRead->getNome();
+
+        $this->assertEquals('MatheusJrJr', $nomeLutadorEsperado);
+    }
 
     public function lutadorValidoProvider()
     {
@@ -234,11 +253,18 @@ class LutadorTest extends TestCase
     
     public function lutadorArrayProvider()
     {
+        $nome = 'Whittaker';
         $vitorias = '30';
         $derrotas = '0';
         $rank = '1';
         $estatisticas = new EstatisticasLutador($vitorias, $derrotas, $rank);
-        
+        $primeiro_lutador = new Lutador($nome, $estatisticas);
+        $segundo_lutador = new Lutador($nome, $estatisticas);
+
+        return [
+            'Array_ComDoisLutadores' => [[$primeiro_lutador, $segundo_lutador]]
+        ];
+
     }
 }
 
