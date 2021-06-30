@@ -49,7 +49,8 @@ class LutadorTest extends TestCase
      */
     public function testDeveRetornarFalseLutadorComDadosInvalidos(Lutador $lutador)
     {
-        $this->assertEquals(false, $this->crud->addLutador($lutador));
+        
+        $this->assertFalse($this->crud->addLutador($lutador));
     }
 
 
@@ -105,10 +106,22 @@ class LutadorTest extends TestCase
         $this->crud->addLutador($lutadores[0]);
         $this->crud->addLutador($lutadores[1]);
         $tabelaLutador = $this->crud->getTabelaLutadores();
-        $lutadorFromRead = $this->crud->readLutador($tabelaLutador[1]);
-        $nomeLutadorEsperado = $lutadorFromRead->getNome();
+        $lutador = $tabelaLutador[1];
+        $buscaLutador = $this->crud->readLutador($lutador->getNome());
+        $lutadorEsperado = $buscaLutador->getNome();
+    
+        
 
-        $this->assertEquals('MatheusJrJr', $nomeLutadorEsperado);
+        $this->assertEquals('MatheusJrJr', $lutadorEsperado);
+    }
+
+    /**
+     * @dataProvider lutadorValidoProvider
+     */
+    public function testReadDeveRetornarVazioEmCasoDeNaoEncontrarOLutador(Lutador $lutador)
+    {
+        $lutadorNome = $lutador->getNome();
+        $this->assertEquals('', $this->crud->readLutador($lutadorNome));
     }
 
     public function lutadorValidoProvider()

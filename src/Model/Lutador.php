@@ -17,7 +17,10 @@ class Lutador
         $this->nome = $nome;
         $this->estatisticas = $estatisticas;
     }
-    
+    public function getIndices($tabelaLutadores)
+    {
+        var_dump(array_search('Bigalow', array_column($tabelaLutadores, 'nome')));
+    }
     public function getNome()
     {
         return $this->nome;
