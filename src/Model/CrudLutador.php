@@ -8,24 +8,38 @@ class CrudLutador
 {
     private array $TabelaLutadores = [];
 
+    public function getTabelaLutadores()
+    {
+        return $this->TabelaLutadores;
+    }
+    
     public function validaNome(string $nomeLutador) 
     {
-        return isset($nomeLutador) && strlen(trim($nomeLutador)) > 5;
+        $NaoestaNoRanking = true;
+        if (sizeof($this->TabelaLutadores) > 0) {
+            foreach ($this->TabelaLutadores as $lutador) {
+                if ($lutador->getNome() === $nomeLutador) {
+                    $NaoestaNoRanking = false;
+                    break;
+                }
+            }
+        }
+        return strlen(trim($nomeLutador)) > 5 && $NaoestaNoRanking;
     }
     
     public function validaVitorias(string $vitoriasLutador)
     {
-        return isset($vitoriasLutador) && $vitoriasLutador > 0;
+        return strlen(trim($vitoriasLutador)) > 0 && $vitoriasLutador > 0;
     }
     
     public function validaDerrotas(string $derrotasLutador)
     {
-        return isset($derrotasLutador) && $derrotasLutador >= 0;
+        return strlen(trim($derrotasLutador)) > 0 && $derrotasLutador >= 0;
     }
     
     public function validaRanking(string $rank)
     {
-        return isset($rank) && in_array(strtoupper($rank), Lutador::rankingsValidos);
+        return strlen(trim($rank)) > 0 && in_array(strtoupper($rank), Lutador::rankingsValidos);
     }
 
     public function validacaoAntesDeSalvar(Lutador $lutador)
@@ -58,18 +72,21 @@ class CrudLutador
             $dataCriacao = new DateTime('NOW');
             $dataCriacao->setTimezone(new DateTimeZone('America/Sao_Paulo'));
             $lutador->setCreated($dataCriacao);
+            array_push($this->TabelaLutadores, $lutador);
         }
         return $validacao; 
     }
 
-    public function readLutador(string $nomeLutador)
+    public function readLutador(Lutador $lutador)
     {
-        foreach ($this->TabelaLutadores as $lutador) {
-            if ($lutador->getNome() == $nomeLutador) {
-                
+        $lutadorEncontrado = '';
+        foreach ($this->TabelaLutadores as $entidadeLutador) {
+            if ($entidadeLutador->getNome() == $lutador->getNome()) {
+                $lutadorEncontrado = $lutador;
+                break;
             }
-
         }
+        return $lutadorEncontrado;
     }
 }
 ?>

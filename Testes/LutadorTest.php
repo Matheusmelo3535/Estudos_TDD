@@ -86,7 +86,10 @@ class LutadorTest extends TestCase
         $this->assertEquals(false, $this->crud->addLutador($lutador));
     }
 
-    
+    public function testReadEmUmUnicoLutadorDeveRetornarCorretamente(array $arrayLutadores)
+    {
+        
+    }
 
 
     public function lutadorValidoProvider()
@@ -227,6 +230,15 @@ class LutadorTest extends TestCase
         return [
             'LutadorVazio' => [$lutador]
         ];
+    }
+    
+    public function lutadorArrayProvider()
+    {
+        $vitorias = '30';
+        $derrotas = '0';
+        $rank = '1';
+        $estatisticas = new EstatisticasLutador($vitorias, $derrotas, $rank);
+        
     }
 }
 
