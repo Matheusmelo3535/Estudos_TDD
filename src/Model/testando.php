@@ -18,7 +18,7 @@ $c->addLutador($l3);
 $novaEstatisticas = new EstatisticasLutador('10', '5', '1');
 
 
-echo $c->editLutador('Matheuszera', $novaEstatisticas);
+echo $c->editLutador('Bigalow', $novaEstatisticas);
 $tabela = $c->getTabelaLutadores();
 
 
