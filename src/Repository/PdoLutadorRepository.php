@@ -51,7 +51,8 @@ class PdoLutadorRepository implements ILutadorRepository
             ':data_nascimento' => $data_nasc_formatada,
             ':created' => $dta_formatado
         ]);
-        
+        $lastId = $this->conexao->lastInsertId();
+        echo $lastId;
         return $exito;
     }
     

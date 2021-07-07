@@ -14,7 +14,7 @@ $est = new EstatisticasLutador('101', '0', 'C');
 $date = new DateTime('2000-01-01');
 
 
-$lutador = new Lutador(null, 'fABIO', $date);
+$lutador = new Lutador(null, 'Robertinho do Gelo', $date);
 $lutador->setEstatisticas($est);
 
 
