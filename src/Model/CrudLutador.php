@@ -88,7 +88,7 @@ class CrudLutador
         $editadoComExito = false;
         $buscaLutador = $this->readLutador($nomeLutador);
         if ($buscaLutador) {
-            $validaDados = $this->validacaoAntesDeSalvar(new Lutador('Validacao', $novosDados));
+            $validaDados = $this->validacaoAntesDeSalvar(new Lutador(null, 'Validacao', new DateTime()));
             if ($validaDados) {
                 $editadoComExito = true;
                 $estatisticasEdit = $buscaLutador->getEstatisticas();

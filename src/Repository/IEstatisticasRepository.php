@@ -7,7 +7,7 @@ use Estudos_TDD\Model\EstatisticasLutador;
 
 interface IEstatisticasRepository
 {
-    public function save(EstatisticasLutador $estatisticas): bool;
+    public function save(EstatisticasLutador $estatisticas, int $idLutador): bool;
     
 }
 
