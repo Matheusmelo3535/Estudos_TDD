@@ -2,25 +2,44 @@
 
 namespace Estudos_TDD\Model;
 use DateTime;
+use DateTimeInterface;
 
 class Lutador 
 {
     public string $nome;
+    private ?int $id; 
     private EstatisticasLutador $estatisticas;
-    private DateTime $created;
-    private DateTime $modified;
-    private DateTime $deleted;
+    private string $data_nascimento;
+    private DateTimeInterface $created;
+    private DateTimeInterface $modified;
+    private DateTimeInterface $deleted;
     const rankingsValidos = ['C','1','2','3','4','5','6','7','8','9','10'];
     
-    public function __construct(string $nome, EstatisticasLutador $estatisticas)
+    public function __construct(?int $id, string $nome, string $data_nascimento)
     {
         $this->nome = $nome;
-        $this->estatisticas = $estatisticas;
+        $this->id = $id;
+        $this->data_nascimento = $data_nascimento;
     }
     
     public function getEstatisticas()
     {
         return $this->estatisticas;
+    }
+    
+    public function getId()
+    {
+        return $this->id;
+    }
+    
+    public function getDataNasc()
+    {
+        return $this->data_nascimento;
+    }
+    
+    public function setEstatisticas(EstatisticasLutador $estatisticas)
+    {
+        $this->estatisticas = $estatisticas;
     }
     
     public function getCreated()
@@ -56,6 +75,11 @@ class Lutador
     public function setDeleted(DateTime $deleted)
     {
        $this->deleted = $deleted;
+    }
+    
+    public function setDataNasc(DateTime $data_nasc)
+    {
+        $this->data_nascimento = $data_nasc;
     }
 }
 

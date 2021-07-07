@@ -15,16 +15,7 @@ class CrudLutador
     
     public function validaNome(string $nomeLutador) 
     {
-        $NaoestaNoRanking = true;
-        if (sizeof($this->TabelaLutadores) > 0) {
-            foreach ($this->TabelaLutadores as $lutador) {
-                if ($lutador->nome === $nomeLutador) {
-                    $NaoestaNoRanking = false;
-                    break;
-                }
-            }
-        }
-        return strlen(trim($nomeLutador)) > 5 && $NaoestaNoRanking;
+        return strlen(trim($nomeLutador)) > 5;
     }
     
     public function validaVitorias(string $vitoriasLutador)
@@ -76,30 +67,49 @@ class CrudLutador
         }
         return $validacao; 
     }
+    
+    public function buscaIndexLutadorPeloNome(string $nome, array $array)
+    {
+        return array_search($nome, array_column($array, 'nome'));
+    }
 
     public function readLutador(string $nomeLutador)
     {
-        $lutadorEncontrado = '';
-        if (sizeof($this->TabelaLutadores) > 0) {
-            foreach ($this->TabelaLutadores as $entidadeLutador) {
-                if ($entidadeLutador->nome == $nomeLutador) {
-                    $lutadorEncontrado = $entidadeLutador;
-                    break;
-                }
-            }
+        $lutadorEncontado = '';
+        $indexLutador = $this->buscaIndexLutadorPeloNome($nomeLutador, $this->TabelaLutadores);
+        if ($indexLutador) {
+            $lutadorEncontado = $this->TabelaLutadores[$indexLutador];
         }
-        return $lutadorEncontrado;
+        return $lutadorEncontado;
     }
 
     public function editLutador(string $nomeLutador, EstatisticasLutador $novosDados)
     {
         $editadoComExito = false;
-        $getIndiceLutador = array_search($nomeLutador, array_column($this->TabelaLutadores, 'nome'));
-        echo $getIndiceLutador;
-       
-        
-        
+        $buscaLutador = $this->readLutador($nomeLutador);
+        if ($buscaLutador) {
+            $validaDados = $this->validacaoAntesDeSalvar(new Lutador('Validacao', $novosDados));
+            if ($validaDados) {
+                $editadoComExito = true;
+                $estatisticasEdit = $buscaLutador->getEstatisticas();
+                $estatisticasEdit->setVitorias($novosDados->getVitorias());
+                $estatisticasEdit->setDerrotas($novosDados->getDerrotas());
+                $estatisticasEdit->setRank($novosDados->getRank());
+            }
+        }
         return $editadoComExito;
+    }
+    
+    public function deleteLutador(string $nomeLutador)
+    {
+        $exlusaoComExito = false;
+        $pegaIndexLutador = $this->buscaIndexLutadorPeloNome($nomeLutador, $this->TabelaLutadores);
+        if ($pegaIndexLutador){
+            unset($this->TabelaLutadores[$pegaIndexLutador]);
+            $exlusaoComExito = true;
+            
+        }
+        return $exlusaoComExito;
     }
 }
 ?>

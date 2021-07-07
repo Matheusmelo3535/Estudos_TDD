@@ -38,7 +38,7 @@ class LutadorTest extends TestCase
     {
 
         $this->assertEquals(true, $this->crud->addLutador($lutador));
-        $this->assertEquals('Matheuszera', $lutador->getNome());
+        $this->assertEquals('Matheuszera', $lutador->nome);
     }
 
     /**
@@ -120,7 +120,7 @@ class LutadorTest extends TestCase
      */
     public function testReadDeveRetornarVazioEmCasoDeNaoEncontrarOLutador(Lutador $lutador)
     {
-        $lutadorNome = $lutador->getNome();
+        $lutadorNome = $lutador->nome;
         $this->assertEquals('', $this->crud->readLutador($lutadorNome));
     }
 
