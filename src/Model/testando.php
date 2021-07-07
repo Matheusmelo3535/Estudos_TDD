@@ -12,9 +12,9 @@ use Estudos_TDD\Repository\PdoLutadorRepository;
 $est = new EstatisticasLutador('101', '0', 'C');
 
 $date = new DateTime('2000-01-01');
-$result = $date->format('Y-m-d H:i:s');
-var_dump($result);
-$lutador = new Lutador(null, 'Jorge', $result);
+
+
+$lutador = new Lutador(null, 'fABIO', $date);
 $lutador->setEstatisticas($est);
 
 

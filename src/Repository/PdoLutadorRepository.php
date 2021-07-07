@@ -5,8 +5,8 @@ namespace Estudos_TDD\Repository;
 
 use Estudos_TDD\Model\Lutador;
 use PDO;
-use DateTimeInterface;
-use DateTimeImmutable;
+use DateTime;
+
 
 class PdoLutadorRepository implements ILutadorRepository
 {
@@ -39,13 +39,17 @@ class PdoLutadorRepository implements ILutadorRepository
     
     public function insert(Lutador $lutador): bool
     {
-        $sqlInsert = 'INSERT INTO Lutadores (nome, data_nascimento) 
-                      VALUES (:nome, :data_nascimento);';
+        $sqlInsert = 'INSERT INTO Lutadores (nome, data_nascimento, created) 
+                      VALUES (:nome, :data_nascimento, :created);';
                       
         $stmt = $this->conexao->prepare($sqlInsert);
+        $dateTimeAtual = new DateTime();
+        $dta_formatado = $dateTimeAtual->format('Y-m-d H:i:s');
+        $data_nasc_formatada = $lutador->getDataNasc()->format('Y-m-d H:i:s');
         $exito = $stmt->execute([
             ':nome' => $lutador->nome,
-            ':data_nascimento' => $lutador->getDataNasc(),
+            ':data_nascimento' => $data_nasc_formatada,
+            ':created' => $dta_formatado
         ]);
         
         return $exito;

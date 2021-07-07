@@ -9,13 +9,13 @@ class Lutador
     public string $nome;
     private ?int $id; 
     private EstatisticasLutador $estatisticas;
-    private string $data_nascimento;
+    private DateTimeInterface $data_nascimento;
     private DateTimeInterface $created;
     private DateTimeInterface $modified;
     private DateTimeInterface $deleted;
     const rankingsValidos = ['C','1','2','3','4','5','6','7','8','9','10'];
     
-    public function __construct(?int $id, string $nome, string $data_nascimento)
+    public function __construct(?int $id, string $nome, DateTimeInterface $data_nascimento)
     {
         $this->nome = $nome;
         $this->id = $id;
