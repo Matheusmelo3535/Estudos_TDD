@@ -9,22 +9,27 @@ use Estudos_TDD\Model\Lutador;
 use Estudos_TDD\Model\CrudLutador;
 use Estudos_TDD\Repository\PdoLutadorRepository;
 
-$est = new EstatisticasLutador(7, '49', '3', '7');
-
-$date = new DateTime('1995-01-03');
-
-
-$lutador = new Lutador(7, 'Atleta novo alterado', $date);
-$lutador->setEstatisticas($est);
-
-
+// try {
 $pdo = ConnectionCreator::createConnection();
-
 $LutadorRepository = new PdoLutadorRepository($pdo);
-$LutadorRepository ->remove($lutador);
 
 
 
+print_r($LutadorRepository->listall());
+// $pdo->beginTransaction();
+
+// $est = new EstatisticasLutador(null, '300', '0', '2');
+// $date = new DateTime('1990-10-10');
+// $lutador = new Lutador(null, 'Matheus fera de bauru', $date);
+// $lutador->setEstatisticas($est);
+
+// $LutadorRepository ->save($lutador);
+// $pdo->commit();
+
+// } catch(PDOException $e) {
+//     echo $e->getMessage();
+//     $pdo->rollBack();
+// }
 
 
 

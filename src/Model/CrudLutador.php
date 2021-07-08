@@ -3,9 +3,16 @@
 namespace Estudos_TDD\Model;
 use DateTime;
 use DateTimeZone;
-
+use Estudos_TDD\Repository\PdoLutadorRepository;
 class CrudLutador
 {
+    private PdoLutadorRepository $pdoLutador;
+
+    public function __construct(PdoLutadorRepository $pdo)
+    {
+        $this->pdoLutador = $pdo;
+    }
+    
     private array $TabelaLutadores = [];
 
     public function getTabelaLutadores()
@@ -64,6 +71,8 @@ class CrudLutador
             $dataCriacao->setTimezone(new DateTimeZone('America/Sao_Paulo'));
             $lutador->setCreated($dataCriacao);
             array_push($this->TabelaLutadores, $lutador);
+            $this->pdoLutador->save($lutador);
+            
         }
         return $validacao; 
     }
