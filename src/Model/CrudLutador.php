@@ -25,56 +25,61 @@ class CrudLutador
         return strlen(trim($nomeLutador)) > 5;
     }
     
-    public function validaVitorias(string $vitoriasLutador)
+    public function validaVitorias(int $vitoriasLutador)
     {
-        return strlen(trim($vitoriasLutador)) > 0 && $vitoriasLutador > 0;
+        return $vitoriasLutador > 0;
     }
     
-    public function validaDerrotas(string $derrotasLutador)
+    public function validaDerrotas(int $derrotasLutador)
     {
-        return strlen(trim($derrotasLutador)) > 0 && $derrotasLutador >= 0;
+        return $derrotasLutador >= 0;
     }
     
     public function validaRanking(string $rank)
     {
-        return strlen(trim($rank)) > 0 && in_array(strtoupper($rank), Lutador::rankingsValidos);
+        return in_array(strtoupper($rank), Lutador::rankingsValidos);
+    }
+    
+    public function validaDuplicidade(Lutador $lutador)
+    {
+       return $this->pdoLutador->verificaSeJaExisteBD($lutador);
     }
 
-    public function validacaoAntesDeSalvar(Lutador $lutador)
+    public function validacaoAntesDeSalvar(Lutador $lutador, string $acao)
     {
         $valido = true;
         $nome = $lutador->nome;
         $vitorias = $lutador->getEstatisticas()->getVitorias();
         $derrotas = $lutador->getEstatisticas()->getDerrotas();
         $rank = $lutador->getEstatisticas()->getRank();
-        $validacao = [
+        $validacaoDados = [
             'nome' => $this->validaNome($nome),
             'vitorias' => $this->validaVitorias($vitorias),
             'derrotas' => $this->validaDerrotas($derrotas),
             'rank' => $this->validaRanking($rank)
         ];
 
-        foreach ($validacao as $atributoLutador){
+        foreach ($validacaoDados as $atributoLutador){
            if (!$atributoLutador){
                 $valido = false;
                 
            }
+        }
+        if ($acao === 'add') {
+            $valido = $this->validaDuplicidade($lutador);
         }
         return $valido;
     }
 
     public function addLutador(Lutador $lutador)
     {
-        $validacao = $this->validacaoAntesDeSalvar($lutador);
-        if ($validacao){
-            $dataCriacao = new DateTime('NOW');
-            $dataCriacao->setTimezone(new DateTimeZone('America/Sao_Paulo'));
-            $lutador->setCreated($dataCriacao);
-            array_push($this->TabelaLutadores, $lutador);
-            $this->pdoLutador->save($lutador);
+        $validaDados = $this->validacaoAntesDeSalvar($lutador,'add');
+        $saveNoBanco = false;
+        if ($validaDados){
+            $saveNoBanco = $this->pdoLutador->save($lutador);
             
         }
-        return $validacao; 
+        return $saveNoBanco; 
     }
     
     public function buscaIndexLutadorPeloNome(string $nome, array $array)
@@ -97,7 +102,7 @@ class CrudLutador
         $editadoComExito = false;
         $buscaLutador = $this->readLutador($nomeLutador);
         if ($buscaLutador) {
-            $validaDados = $this->validacaoAntesDeSalvar(new Lutador(null, 'Validacao', new DateTime()));
+            $validaDados = $this->validacaoAntesDeSalvar(new Lutador(null, 'Validacao', new DateTime()), 'edit');
             if ($validaDados) {
                 $editadoComExito = true;
                 $estatisticasEdit = $buscaLutador->getEstatisticas();
@@ -119,6 +124,11 @@ class CrudLutador
             
         }
         return $exlusaoComExito;
+    }
+    
+    public function funcaoListTeste(): array
+    {
+        return $this->pdoLutador->listAll();
     }
 }
 ?>

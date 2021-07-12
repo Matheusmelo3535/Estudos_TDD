@@ -8,6 +8,7 @@ use PDO;
 use DateTime;
 use PDOStatement;
 use Estudos_TDD\Model\EstatisticasLutador;
+use PDOException;
 
 class PdoLutadorRepository implements ILutadorRepository
 {
@@ -23,6 +24,18 @@ class PdoLutadorRepository implements ILutadorRepository
             return $this->insert($lutador);
         }
         return $this->update($lutador);
+    }
+    
+    public function verificaSeJaExisteBD(Lutador $lutador) : bool
+    {
+        $NaoExiste = true;
+        $nomeLutador = $lutador->nome;
+        $stmtSearch = $this->conexao->query("SELECT * FROM lutadores WHERE nome = '$nomeLutador' ");
+        $resultado = $stmtSearch->fetchAll();
+        if ($resultado) {
+            $NaoExiste = false;
+        }
+        return $NaoExiste;
     }
     
     public function listAll(): array
@@ -87,32 +100,38 @@ class PdoLutadorRepository implements ILutadorRepository
     
     public function insert(Lutador $lutador): bool
     {
-        $sqlInsertLutadores = 'INSERT INTO Lutadores (nome, data_nascimento, created) 
-                      VALUES (:nome, :data_nascimento, :created);';
-                      
-        $stmt = $this->conexao->prepare($sqlInsertLutadores);
-        $dateTimeAtual = new DateTime();
-        $dta_formatado = $dateTimeAtual->format('Y-m-d');
-        $data_nasc_formatada = $lutador->getDataNasc()->format('Y-m-d H:i:s');
-        $insertInBdLutador = $stmt->execute([
-            ':nome' => $lutador->nome,
-            ':data_nascimento' => $data_nasc_formatada,
-            ':created' => $dta_formatado,
-        ]);
-        
-        $lastId = $this->conexao->lastInsertId();
-        $estatisticas = $lutador->getEstatisticas();
-        
-        $sqlInsertEstatisticas = 'INSERT INTO estatisticas (vitorias, derrotas, ranking, lutador_id) 
-                      VALUES (:vitorias,:derrotas,:ranking, :lutador_id);';
-        $stmt = $this->conexao->prepare($sqlInsertEstatisticas);
-        $insertInBdEstatisticas = $stmt->execute([
-            ':vitorias' => $estatisticas->getVitorias(),
-            ':derrotas' => $estatisticas->getDerrotas(),
-            ':ranking' => $estatisticas->getRank(),
-            ':lutador_id' => $lastId,
-        ]);
-
+        try{
+            $this->conexao->beginTransaction();
+            $sqlInsertLutadores = 'INSERT INTO Lutadores (nome, data_nascimento, created) 
+                        VALUES (:nome, :data_nascimento, :created);';
+                        
+            $stmt = $this->conexao->prepare($sqlInsertLutadores);
+            $dateTimeAtual = new DateTime();
+            $dta_formatado = $dateTimeAtual->format('Y-m-d');
+            $data_nasc_formatada = $lutador->getDataNasc()->format('Y-m-d H:i:s');
+            $insertInBdLutador = $stmt->execute([
+                ':nome' => $lutador->nome,
+                ':data_nascimento' => $data_nasc_formatada,
+                ':created' => $dta_formatado,
+            ]);
+            
+            $lastId = $this->conexao->lastInsertId();
+            $estatisticas = $lutador->getEstatisticas();
+            
+            $sqlInsertEstatisticas = 'INSERT INTO estatisticas (vitorias, derrotas, ranking, lutador_id) 
+                        VALUES (:vitorias,:derrotas,:ranking, :lutador_id);';
+            $stmt = $this->conexao->prepare($sqlInsertEstatisticas);
+            $insertInBdEstatisticas = $stmt->execute([
+                ':vitorias' => $estatisticas->getVitorias(),
+                ':derrotas' => $estatisticas->getDerrotas(),
+                ':ranking' => $estatisticas->getRank(),
+                ':lutador_id' => $lastId,
+            ]);
+            $this->conexao->commit();
+        }catch(PDOException $e) {
+            echo $e->getMessage();
+            $this->conexao->rollBack();
+        }
         return $insertInBdLutador && $insertInBdEstatisticas;
     }
     
@@ -139,6 +158,7 @@ class PdoLutadorRepository implements ILutadorRepository
         
         return $updateInBd;
     }
+    
 }
 
 

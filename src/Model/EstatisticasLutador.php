@@ -5,11 +5,11 @@ namespace Estudos_TDD\Model;
 class EstatisticasLutador
 {
     private ?int $id;
-    private string $vitorias;
-    private string $derrotas;
+    private int $vitorias;
+    private int $derrotas;
     private string $rank;
 
-    public function __construct(?int $id, string $vitorias, string $derrotas, string $rank)
+    public function __construct(?int $id, int $vitorias, int $derrotas, string $rank)
     {
         $this->id = $id;
         $this->vitorias = $vitorias;
