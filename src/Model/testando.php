@@ -19,7 +19,7 @@ $lutador->setEstatisticas($est);
 // $pdo->insert($lutador);
 
 
-var_dump($crudLutador->addLutador($lutador));
+
 
 
 

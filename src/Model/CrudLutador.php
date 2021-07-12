@@ -4,6 +4,7 @@ namespace Estudos_TDD\Model;
 use DateTime;
 use DateTimeZone;
 use Estudos_TDD\Repository\PdoLutadorRepository;
+use Estudos_TDD\Infra\ConnectionCreator;
 class CrudLutador
 {
     private PdoLutadorRepository $pdoLutador;
@@ -95,6 +96,23 @@ class CrudLutador
             $lutadorEncontado = $this->TabelaLutadores[$indexLutador];
         }
         return $lutadorEncontado;
+    }
+
+    public function paginacaoLutadores()
+    {
+        $pagina = (isset($_GET['page']) && is_numeric($_GET['page']) ) ? $_GET['page'] : 1;
+        $porPagina = 5;
+        $totalLutadores = $this->pdoLutador->QtdLutadores();
+        $totalPaginas = ceil($totalLutadores / $porPagina);
+        $paginationStart = ($pagina - 1) * $porPagina;
+
+        return ['Paginas'=> $totalPaginas, 'Offset' => $paginationStart, 'QtdPorPagina' => $porPagina];
+    }
+
+    public function getLutadoresComLimit($offset, $qtdPorPagina)
+    {
+        $lutadores = $this->pdoLutador->listLutadoresWithLimit($offset, $qtdPorPagina);
+        return $lutadores;
     }
 
     public function editLutador(string $nomeLutador, EstatisticasLutador $novosDados)

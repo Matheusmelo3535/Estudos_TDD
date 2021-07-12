@@ -97,6 +97,18 @@ class PdoLutadorRepository implements ILutadorRepository
         return $removeInBd;
 
     }
+
+    public function listLutadoresWithLimit($offset, $qtdPorPagina)
+    {
+        return $this->conexao->query("SELECT * FROM Lutadores LIMIT $offset, $qtdPorPagina")->fetchAll();
+    }
+
+    public function QtdLutadores()
+    {
+        $stmt = $this->conexao->query('SELECT COUNT(*) FROM lutadores');
+        $totalDeLutadores = $stmt->fetchColumn();
+        return $totalDeLutadores;
+    }
     
     public function insert(Lutador $lutador): bool
     {
