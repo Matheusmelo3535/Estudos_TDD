@@ -8,7 +8,7 @@ interface ILutadorRepository
     public function save(Lutador $lutador): bool;
     public function remove(Lutador $lutador): bool;
     public function listAll(): array;
-    public function listById();
+    public function listById(int $id);
     
     
 }

@@ -1,0 +1,94 @@
+
+body {
+    font-family: 'Vollkorn', serif;
+    padding-bottom: 5rem;
+}
+
+.section-padding {
+    padding: 7em 0;
+}
+
+.ufc-logo {
+    width: 80px;
+    height: auto;
+
+}
+
+.title {
+    font-family: 'Montserrat', sans-serif;
+}
+
+
+
+.header-links {
+    font-family: 'Ubuntu', sans-serif;
+    color: black;
+    font-size: 1.3rem;
+}
+
+
+.add-atleta-link {
+    text-decoration: none;
+    
+}
+
+.add-atleta-link i {
+    font-size: 1.8em;
+}
+
+
+.borda-redonda {
+    border-radius: 2rem;
+}
+
+.form-background {
+    background-color: whitesmoke;
+    padding: 2rem;
+}
+
+
+
+
+footer {
+    background-color:black;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}
+
+footer span {
+    color: whitesmoke;
+}
+
+
+.ufc-banner {
+
+  background-image: url(/assets/images/ufc-banner.jpg); 
+  background-color: #cccccc; 
+  height: 700px; 
+  background-position: center; 
+  background-repeat: no-repeat; 
+  background-size: cover; 
+    
+}
+
+
+.img-carousel {
+    object-fit: cover;
+    object-position: 50% 30%;
+    height: 600px;
+}
+
+
+.view-do-atleta h4 {
+    font-size: 2rem;
+    font-weight: 900;
+}
+
+.view-do-atleta h5 {
+    font-size: 1.5rem;
+    line-height: 2;
+}
+

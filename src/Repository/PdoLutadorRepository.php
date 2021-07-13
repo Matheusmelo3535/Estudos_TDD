@@ -30,7 +30,7 @@ class PdoLutadorRepository implements ILutadorRepository
     {
         $NaoExiste = true;
         $nomeLutador = $lutador->nome;
-        $stmtSearch = $this->conexao->query("SELECT * FROM lutadores WHERE nome = '$nomeLutador' ");
+        $stmtSearch = $this->conexao->query("SELECT * FROM lutadores WHERE nome = '$nomeLutador' ;");
         $resultado = $stmtSearch->fetchAll();
         if ($resultado) {
             $NaoExiste = false;
@@ -43,7 +43,7 @@ class PdoLutadorRepository implements ILutadorRepository
         $stmt = $this->conexao->query('SELECT l.id as idDoLutador, l.nome,l.data_nascimento, l.created, 
                             l.modified, e.id as estId, 
                             e.vitorias, e.derrotas, e.ranking 
-                            FROM lutadores l INNER JOIN estatisticas e ON l.id = e.lutador_id');
+                            FROM lutadores l INNER JOIN estatisticas e ON l.id = e.lutador_id;');
 
         return $this->hydrateLutadorList($stmt);
     }
@@ -82,14 +82,17 @@ class PdoLutadorRepository implements ILutadorRepository
         return $lutadorListaObj;
     }
     
-    public function listById()
+    public function listById(int $id)
     {
-        return 'oi';
+        $stmt = $this->conexao->query(
+            "SELECT l.id as lutadorId, l.nome, e.ranking, e.vitorias, e.derrotas FROM lutadores l
+            INNER JOIN estatisticas e ON l.id = e.lutador_id WHERE l.id = '$id';");
+        $lutadorFound = $stmt->fetch();
+        return $lutadorFound;
     }
-    
     public function remove(Lutador $lutador): bool
     {
-        $stmt = $this->conexao->prepare('DELETE FROM lutadores WHERE id = :id');
+        $stmt = $this->conexao->prepare('DELETE FROM lutadores WHERE id = :id;');
         $removeInBd = $stmt->execute([
             ':id' => $lutador->getId(),
         ]);
@@ -100,12 +103,15 @@ class PdoLutadorRepository implements ILutadorRepository
 
     public function listLutadoresWithLimit($offset, $qtdPorPagina)
     {
-        return $this->conexao->query("SELECT * FROM Lutadores LIMIT $offset, $qtdPorPagina")->fetchAll();
+        return $this->conexao->query(
+            "SELECT e.ranking, l.nome, e.vitorias, e.derrotas, l.id as lutadorId FROM Lutadores l 
+            INNER JOIN Estatisticas e 
+            ON l.id = e.lutador_id LIMIT $offset, $qtdPorPagina;")->fetchAll();
     }
 
     public function QtdLutadores()
     {
-        $stmt = $this->conexao->query('SELECT COUNT(*) FROM lutadores');
+        $stmt = $this->conexao->query('SELECT COUNT(*) FROM lutadores;');
         $totalDeLutadores = $stmt->fetchColumn();
         return $totalDeLutadores;
     }

@@ -2,9 +2,8 @@
 
 namespace Estudos_TDD\Model;
 use DateTime;
-use DateTimeZone;
 use Estudos_TDD\Repository\PdoLutadorRepository;
-use Estudos_TDD\Infra\ConnectionCreator;
+
 class CrudLutador
 {
     private PdoLutadorRepository $pdoLutador;
@@ -66,7 +65,7 @@ class CrudLutador
                 
            }
         }
-        if ($acao === 'add') {
+        if ($acao === 'add' && $valido) {
             $valido = $this->validaDuplicidade($lutador);
         }
         return $valido;
@@ -147,6 +146,12 @@ class CrudLutador
     public function funcaoListTeste(): array
     {
         return $this->pdoLutador->listAll();
+    }
+    
+    public function getById(int $id)
+    {
+        $lutador = $this->pdoLutador->listById($id);
+        return $lutador;
     }
 }
 ?>
