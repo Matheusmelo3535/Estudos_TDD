@@ -1,17 +1,17 @@
-let rankingsDisponiveis = ['11', '12', '13', '14', '15'];
+let rankingsDisponiveis = [1, 2, 3, 4 ,5 ,6 ,7 ,8 ,9 ,10 ,11, 12, 13, 14, 15];
 let selectFormAtleta = document.querySelector('.form-select');
 let formAddAtleta = document.querySelector('.form-add-atleta');
-addOptions(selectFormAtleta);
+// addOptions(selectFormAtleta);
 
-function addOptions(selectForm)
-{
-    for(i = 0; i < rankingsDisponiveis.length; i++){
-        let option = document.createElement('option');
-        option.textContent = rankingsDisponiveis[i];
-        selectForm.append(option);  
-    }
+// function addOptions(selectForm)
+// {
+//     for(i = 0; i < rankingsDisponiveis.length; i++){
+//         let option = document.createElement('option');
+//         option.textContent = rankingsDisponiveis[i];
+//         selectForm.append(option);  
+//     }
     
-}
+// }
 
 
 function getAtletaFromForm(form) {
@@ -29,24 +29,24 @@ $(function() {
     
     $('.cancel-atleta').click(function(e) {
         e.preventDefault();
-        window.location.href = "index.html";
+        window.location.href = "index.php";
     });
 
     $('.add-atleta').click(function(e) {
-        e.preventDefault();
-        let atletaNovo = getAtletaFromForm(formAddAtleta);
-        let rankOcupado = false;
-        lutadores.forEach(lutador => {
-            if(lutador[0] == atletaNovo[0]){
-                alert('Este rank está ocupado!');
-                rankOcupado = true;
-            }
+        // e.preventDefault();
+        // let atletaNovo = getAtletaFromForm(formAddAtleta);
+        // let rankOcupado = false;
+        // lutadores.forEach(lutador => {
+        //     if(lutador[0] == atletaNovo[0]){
+        //         alert('Este rank está ocupado!');
+        //         rankOcupado = true;
+        //     }
             
-        });
-        if(!rankOcupado) {
-            localStorage.setItem('novoAtleta', atletaNovo);
-            alert('Atleta Cadastrado com êxito');
-        }
+        // });
+        // if(!rankOcupado) {
+        //     localStorage.setItem('novoAtleta', atletaNovo);
+        //     alert('Atleta Cadastrado com êxito');
+        // }
         
          
     })

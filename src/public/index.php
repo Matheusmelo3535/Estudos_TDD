@@ -74,7 +74,7 @@
             </div>
             <div class="row mb-3">
                 <div class="col d-flex">
-                    <a class="add-atleta-link  me-2" href="formAtleta.html"><i class="fas fa-plus"></i></a>
+                    <a class="add-atleta-link  me-2" href="formAtleta.php"><i class="fas fa-plus"></i></a>
                     <span>Adicionar Atleta</span>
                 </div>
             </div>

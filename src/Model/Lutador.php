@@ -13,7 +13,7 @@ class Lutador
     private DateTimeInterface $created;
     private DateTimeInterface $modified;
     private DateTimeInterface $deleted;
-    const rankingsValidos = ['C','1','2','3','4','5','6','7','8','9','10'];
+    const RAKINGSVALIDOS = ['C',1,2,3,4,5,6,7,8,9,10];
     
     public function __construct(?int $id, string $nome, DateTimeInterface $data_nascimento)
     {

@@ -3,6 +3,9 @@
 namespace Estudos_TDD\Model;
 use DateTime;
 use Estudos_TDD\Repository\PdoLutadorRepository;
+use Estudos_TDD\Model\Lutador;
+use Estudos_TDD\Model\EstatisticasLutador;
+require_once __DIR__ . '../../PdoSetup.php';
 
 class CrudLutador
 {
@@ -37,7 +40,13 @@ class CrudLutador
     
     public function validaRanking(string $rank)
     {
-        return in_array(strtoupper($rank), Lutador::rankingsValidos);
+        $buscaNoBanco = $this->pdoLutador->isRankNotAvaible($rank);
+        $avaible = true;
+        if ($buscaNoBanco)
+        {
+            $avaible = false;
+        }
+        return in_array(strtoupper($rank), Lutador::RAKINGSVALIDOS) &&  $avaible;
     }
     
     public function validaDuplicidade(Lutador $lutador)

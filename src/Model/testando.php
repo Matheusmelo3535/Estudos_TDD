@@ -13,10 +13,10 @@ use Estudos_TDD\Repository\PdoLutadorRepository;
 $Conn = ConnectionCreator::createConnection();
 $pdo = new PdoLutadorRepository($Conn);
 $crudLutador = new CrudLutador($pdo);
-$est = new EstatisticasLutador(null, 45, 6, '5');
-$lutador = new Lutador(null, 'NAO TO', new DateTime());
+$est = new EstatisticasLutador(null, 45, 6, '3');
+$lutador = new Lutador(null, 'testando', new DateTime());
 $lutador->setEstatisticas($est);
-// $pdo->insert($lutador);
+$crudLutador->addLutador($lutador);
 
 
 

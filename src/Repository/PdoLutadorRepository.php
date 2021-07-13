@@ -176,8 +176,15 @@ class PdoLutadorRepository implements ILutadorRepository
         
         return $updateInBd;
     }
-    
+
+    public function isRankNotAvaible(string $rank)
+    {
+        $stmt = $this->conexao->query(
+            "SELECT * FROM lutadores l 
+            INNER JOIN estatisticas e ON l.id = e.lutador_id
+            WHERE e.ranking = '$rank'");
+        $avaible = $stmt->fetchAll();
+        return $avaible;  
+    } 
 }
-
-
 ?>
