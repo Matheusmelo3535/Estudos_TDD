@@ -33,8 +33,9 @@ $(function() {
     });
 
     $('.add-atleta').click(function(e) {
-        // e.preventDefault();
-        // let atletaNovo = getAtletaFromForm(formAddAtleta);
+        e.preventDefault();
+        let atletaNovo = getAtletaFromForm(formAddAtleta);
+        console.log('oi');
         // let rankOcupado = false;
         // lutadores.forEach(lutador => {
         //     if(lutador[0] == atletaNovo[0]){
@@ -47,8 +48,6 @@ $(function() {
         //     localStorage.setItem('novoAtleta', atletaNovo);
         //     alert('Atleta Cadastrado com êxito');
         // }
-        
-         
     })
 
 })

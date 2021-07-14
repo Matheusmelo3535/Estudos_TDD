@@ -90,11 +90,11 @@ class PdoLutadorRepository implements ILutadorRepository
         $lutadorFound = $stmt->fetch();
         return $lutadorFound;
     }
-    public function remove(Lutador $lutador): bool
+    public function remove(int $id): bool
     {
         $stmt = $this->conexao->prepare('DELETE FROM lutadores WHERE id = :id;');
         $removeInBd = $stmt->execute([
-            ':id' => $lutador->getId(),
+            ':id' => $id,
         ]);
         
         return $removeInBd;

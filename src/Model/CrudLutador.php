@@ -5,7 +5,7 @@ use DateTime;
 use Estudos_TDD\Repository\PdoLutadorRepository;
 use Estudos_TDD\Model\Lutador;
 use Estudos_TDD\Model\EstatisticasLutador;
-require_once __DIR__ . '../../PdoSetup.php';
+
 
 class CrudLutador
 {
@@ -140,19 +140,13 @@ class CrudLutador
         return $editadoComExito;
     }
     
-    public function deleteLutador(string $nomeLutador)
+    public function deleteLutador(int $id)
     {
-        $exlusaoComExito = false;
-        $pegaIndexLutador = $this->buscaIndexLutadorPeloNome($nomeLutador, $this->TabelaLutadores);
-        if ($pegaIndexLutador){
-            unset($this->TabelaLutadores[$pegaIndexLutador]);
-            $exlusaoComExito = true;
-            
-        }
+        $exlusaoComExito = $this->pdoLutador->remove($id);
         return $exlusaoComExito;
     }
     
-    public function funcaoListTeste(): array
+    public function getAll(): array
     {
         return $this->pdoLutador->listAll();
     }

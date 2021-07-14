@@ -106,8 +106,12 @@
                             <td><?= $lutador['vitorias']?></td>
                             <td><?= $lutador['derrotas']?></td>
                             <td>
-                                <a class="m-2 view" href="viewAtleta.php?idEdit=<?= $lutador['lutadorId']?>">
+                                <a class="m-2 view btn btn-primary" href="viewAtleta.php?idView=<?= $lutador['lutadorId']?>">
                                     <i class="fas fa-eye"></i>
+                                </a>
+                                <a class="m-2 delete btn btn-danger" onClick="return confirm('Tem certeza que deseja excluir?')" 
+                                href="deleteLutador.php?idDelete=<?= $lutador['lutadorId']?>">
+                                    <i class="far fa-trash-alt"></i>
                                 </a>
                             </td>
                         </tr>
@@ -132,7 +136,7 @@
             <span>© 2021 Copyright UFC. Todos os direitos reservados.</span>
         </div>
     </footer>
-    <!-- <script src="../assets/js/jquery-3.5.1.slim.min.js"></script> -->
+    <script src="../assets/js/jquery-3.5.1.slim.min.js"></script>
     <script src="../assets/js/bootstrap.bundle.min.js"></script>
     <!-- <script src="../assets/js/paginacao.js"></script> -->
 </body>

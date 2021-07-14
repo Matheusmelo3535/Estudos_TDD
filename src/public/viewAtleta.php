@@ -42,7 +42,7 @@
     <div class="container border-bottom">
         <?php 
             require_once __DIR__. '/../PdoSetup.php';
-            $idFromGet = $_GET['idEdit'];
+            $idFromGet = $_GET['idView'];
             $lutador = $CrudLutador->getById($idFromGet);
         ?>
         <div class="row mb-5">
