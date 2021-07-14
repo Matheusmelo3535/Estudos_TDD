@@ -74,6 +74,9 @@
                 <h5><?=$lutador['derrotas'];?></h5>
             </div>
         </div>
+        <div class="col-md-2 text-center mb-3">
+            <a href="index.php" type="button" class="btn btn-primary btn-lg borda-redonda cancel-atleta">Voltar</a>
+        </div>
     </div>
     <footer class="text-center">
         <div class="container p-3 d-flex justify-content-center align-items-center flex-column">

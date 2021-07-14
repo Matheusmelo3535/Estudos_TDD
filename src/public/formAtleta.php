@@ -50,7 +50,7 @@
                     <h1>Adicione um novo Atleta</h1>
                 </div>
             </div>
-            <form class="form-add-atleta" action="addLutador.php" method="POST">
+            <form class="form-add-atleta" action="addLutador.php" method="POST" id = "formAddAtleta">
                 <div class="container">
                     <?php 
                         require_once __DIR__ . '../../PdoSetup.php';
@@ -93,8 +93,12 @@
                     </div>
                 </div>
             </form>
+            <?php
+                if (isset($teste)) {
+                    echo $teste;
+                }
+            ?>
         </div>
-        <p class="testando"></p>
     </main>
     <footer class="text-center">
         <div class="container p-3 d-flex justify-content-center align-items-center flex-column">

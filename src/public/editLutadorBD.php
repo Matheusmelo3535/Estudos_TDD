@@ -11,11 +11,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $rank = $_POST["ranking"];
     $vitorias = $_POST["vitorias"];
     $derrotas = $_POST["derrotas"];
-    $lutador = new Lutador(null, $nome, $data_nasc);
+    $id = $_POST['idDoLutador'];
+    $lutador = new Lutador($id, $nome, $data_nasc);
     $estatisticas = new EstatisticasLutador(null, $vitorias, $derrotas, $rank);
     $lutador->setEstatisticas($estatisticas);
-    $addNoBanco = $CrudLutador->addLutador($lutador);
+    var_dump($addNoBanco = $CrudLutador->editLutador($lutador));
+    print_r($lutador);
 }
-$teste = "hello world";
-include 'formAtleta.php';
 ?>

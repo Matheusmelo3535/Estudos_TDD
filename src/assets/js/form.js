@@ -20,9 +20,20 @@ function getAtletaFromForm(form) {
     let nome = form.AtletaFormNome.value;
     let vitorias = form.AtletaformVitorias.value;
     let derrotas = form.AtletaformDerrotas.value;
-    novoAtleta.push(ranking.text(), nome, vitorias, derrotas);
+    let dataNasc = form.AtletaFormDataNasc.value;
+    novoAtleta.push(ranking.text(), nome, vitorias, derrotas, dataNasc);
     console.log(novoAtleta);
     return novoAtleta;
+}
+
+function validaDadosForm(atleta) {
+    valido = true;
+    atleta.forEach(atributo => {
+        if (!atributo) {
+            valido = false;
+        }
+    });
+    return valido;
 }
 
 $(function() {
@@ -35,7 +46,12 @@ $(function() {
     $('.add-atleta').click(function(e) {
         e.preventDefault();
         let atletaNovo = getAtletaFromForm(formAddAtleta);
-        console.log('oi');
+        let validacao = validaDadosForm(atletaNovo);
+        if(!validacao) {
+            alert('Dados inválidos, tente novamente.');
+            return;
+        }
+        $("#formAddAtleta").submit();
         // let rankOcupado = false;
         // lutadores.forEach(lutador => {
         //     if(lutador[0] == atletaNovo[0]){

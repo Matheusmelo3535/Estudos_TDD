@@ -85,7 +85,7 @@ class PdoLutadorRepository implements ILutadorRepository
     public function listById(int $id)
     {
         $stmt = $this->conexao->query(
-            "SELECT l.id as lutadorId, l.nome, e.ranking, e.vitorias, e.derrotas FROM lutadores l
+            "SELECT l.id as lutadorId, l.nome, l.data_nascimento , e.ranking, e.vitorias, e.derrotas FROM lutadores l
             INNER JOIN estatisticas e ON l.id = e.lutador_id WHERE l.id = '$id';");
         $lutadorFound = $stmt->fetch();
         return $lutadorFound;
@@ -155,24 +155,24 @@ class PdoLutadorRepository implements ILutadorRepository
     
     public function update(Lutador $lutador): bool
     {
-        $sqlUpdate = 'UPDATE Lutadores, Estatisticas e INNER JOIN Lutadores l ON l.id = e.lutador_id
-                      SET l.nome = :nome, l.data_nascimento = :data_nascimento, l.modified = :modified,
-                          e.vitorias = :vitorias, e.derrotas = :derrotas, e.ranking = :ranking
-                      WHERE l.id = :id;';
-                      
-        $stmt = $this->conexao->prepare($sqlUpdate);
-        $dateTimeAtual = new DateTime();
-        $dta_formatado = $dateTimeAtual->format('Y-m-d');
-        $data_nasc_formatada = $lutador->getDataNasc()->format('Y-m-d H:i:s');
-        $updateInBd = $stmt->execute([
-            ':nome' => $lutador->nome,
-            ':data_nascimento' => $data_nasc_formatada,
-            ':modified' => $dta_formatado,
-            ':vitorias' => $lutador->getEstatisticas()->getVitorias(),
-            ':derrotas' => $lutador->getEstatisticas()->getDerrotas(),
-            ':ranking' => $lutador->getEstatisticas()->getRank(),
-            ':id' => $lutador->getId(),
-        ]);
+            $sqlUpdate = 'UPDATE Lutadores, Estatisticas e INNER JOIN Lutadores l ON l.id = e.lutador_id
+                        SET l.nome = :nome, l.data_nascimento = :data_nascimento, l.modified = :modified,
+                            e.vitorias = :vitorias, e.derrotas = :derrotas, e.ranking = :ranking
+                        WHERE l.id = :id;';
+                        
+            $stmt = $this->conexao->prepare($sqlUpdate);
+            $dateTimeAtual = new DateTime();
+            $dta_formatado = $dateTimeAtual->format('Y-m-d');
+            $data_nasc_formatada = $lutador->getDataNasc()->format('Y-m-d H:i:s');
+            $updateInBd = $stmt->execute([
+                ':nome' => $lutador->nome,
+                ':data_nascimento' => $data_nasc_formatada,
+                ':modified' => $dta_formatado,
+                ':vitorias' => $lutador->getEstatisticas()->getVitorias(),
+                ':derrotas' => $lutador->getEstatisticas()->getDerrotas(),
+                ':ranking' => $lutador->getEstatisticas()->getRank(),
+                ':id' => $lutador->getId(),
+            ]);
         
         return $updateInBd;
     }

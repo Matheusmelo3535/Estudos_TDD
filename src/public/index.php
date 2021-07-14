@@ -106,12 +106,15 @@
                             <td><?= $lutador['vitorias']?></td>
                             <td><?= $lutador['derrotas']?></td>
                             <td>
-                                <a class="m-2 view btn btn-primary" href="viewAtleta.php?idView=<?= $lutador['lutadorId']?>">
+                                <a class="m-2 view btn btn-primary" href="viewAtleta.php?idView=<?= $lutador['lutadorId'];?>">
                                     <i class="fas fa-eye"></i>
                                 </a>
                                 <a class="m-2 delete btn btn-danger" onClick="return confirm('Tem certeza que deseja excluir?')" 
-                                href="deleteLutador.php?idDelete=<?= $lutador['lutadorId']?>">
+                                href="deleteLutador.php?idDelete=<?= $lutador['lutadorId'];?>">
                                     <i class="far fa-trash-alt"></i>
+                                </a>
+                                <a class="m-2 btn btn-success m-2 edit" href="editAtleta.php?idEdit=<?=$lutador['lutadorId']; ?>">
+                                    <i class="fas fa-edit"></i>
                                 </a>
                             </td>
                         </tr>

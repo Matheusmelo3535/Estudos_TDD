@@ -1,11 +1,8 @@
 <?php
 
 namespace Estudos_TDD\Model;
-use DateTime;
 use Estudos_TDD\Repository\PdoLutadorRepository;
 use Estudos_TDD\Model\Lutador;
-use Estudos_TDD\Model\EstatisticasLutador;
-
 
 class CrudLutador
 {
@@ -15,14 +12,7 @@ class CrudLutador
     {
         $this->pdoLutador = $pdo;
     }
-    
-    private array $TabelaLutadores = [];
-
-    public function getTabelaLutadores()
-    {
-        return $this->TabelaLutadores;
-    }
-    
+     
     public function validaNome(string $nomeLutador) 
     {
         return strlen(trim($nomeLutador)) > 5;
@@ -38,7 +28,13 @@ class CrudLutador
         return $derrotasLutador >= 0;
     }
     
-    public function validaRanking(string $rank)
+    public function validaRankingPermitido(string $rank)
+    {
+
+        return in_array(strtoupper($rank), Lutador::RAKINGSVALIDOS);
+    }
+
+    public function validaRankingDisponivel(string $rank)
     {
         $buscaNoBanco = $this->pdoLutador->isRankNotAvaible($rank);
         $avaible = true;
@@ -46,10 +42,10 @@ class CrudLutador
         {
             $avaible = false;
         }
-        return in_array(strtoupper($rank), Lutador::RAKINGSVALIDOS) &&  $avaible;
+        return $avaible;
     }
     
-    public function validaDuplicidade(Lutador $lutador)
+    public function validaDuplicidadeNome(Lutador $lutador)
     {
        return $this->pdoLutador->verificaSeJaExisteBD($lutador);
     }
@@ -65,7 +61,7 @@ class CrudLutador
             'nome' => $this->validaNome($nome),
             'vitorias' => $this->validaVitorias($vitorias),
             'derrotas' => $this->validaDerrotas($derrotas),
-            'rank' => $this->validaRanking($rank)
+            'rank' => $this->validaRankingPermitido($rank),
         ];
 
         foreach ($validacaoDados as $atributoLutador){
@@ -75,7 +71,11 @@ class CrudLutador
            }
         }
         if ($acao === 'add' && $valido) {
-            $valido = $this->validaDuplicidade($lutador);
+            $nomeNaoExisteNoBD = $this->validaDuplicidadeNome($lutador);
+            $rankingDisponivel = $this->validaRankingDisponivel($rank);
+            if (!$nomeNaoExisteNoBD || !$rankingDisponivel) {
+                $valido = false;
+            }
         }
         return $valido;
     }
@@ -91,20 +91,6 @@ class CrudLutador
         return $saveNoBanco; 
     }
     
-    public function buscaIndexLutadorPeloNome(string $nome, array $array)
-    {
-        return array_search($nome, array_column($array, 'nome'));
-    }
-
-    public function readLutador(string $nomeLutador)
-    {
-        $lutadorEncontado = '';
-        $indexLutador = $this->buscaIndexLutadorPeloNome($nomeLutador, $this->TabelaLutadores);
-        if ($indexLutador) {
-            $lutadorEncontado = $this->TabelaLutadores[$indexLutador];
-        }
-        return $lutadorEncontado;
-    }
 
     public function paginacaoLutadores()
     {
@@ -123,19 +109,12 @@ class CrudLutador
         return $lutadores;
     }
 
-    public function editLutador(string $nomeLutador, EstatisticasLutador $novosDados)
+    public function editLutador(Lutador $lutador)
     {
         $editadoComExito = false;
-        $buscaLutador = $this->readLutador($nomeLutador);
-        if ($buscaLutador) {
-            $validaDados = $this->validacaoAntesDeSalvar(new Lutador(null, 'Validacao', new DateTime()), 'edit');
-            if ($validaDados) {
-                $editadoComExito = true;
-                $estatisticasEdit = $buscaLutador->getEstatisticas();
-                $estatisticasEdit->setVitorias($novosDados->getVitorias());
-                $estatisticasEdit->setDerrotas($novosDados->getDerrotas());
-                $estatisticasEdit->setRank($novosDados->getRank());
-            }
+        $validaDadosLutador = $this->validacaoAntesDeSalvar($lutador, 'edit');
+        if ($validaDadosLutador) {
+            $editadoComExito = $this->pdoLutador->save($lutador);
         }
         return $editadoComExito;
     }
