@@ -18,7 +18,7 @@ class PdoLutadorRepository implements ILutadorRepository
     {
         $this->conexao = $conexao;
     }
-    public function save(Lutador $lutador): bool
+    public function save(Lutador $lutador)
     {
         if ($lutador->getId() === null) {
             return $this->insert($lutador);
@@ -116,9 +116,10 @@ class PdoLutadorRepository implements ILutadorRepository
         return $totalDeLutadores;
     }
     
-    public function insert(Lutador $lutador): bool
+    public function insert(Lutador $lutador)
     {
         try{
+            $insertComExito = '';
             $this->conexao->beginTransaction();
             $sqlInsertLutadores = 'INSERT INTO Lutadores (nome, data_nascimento, created) 
                         VALUES (:nome, :data_nascimento, :created);';
@@ -147,10 +148,10 @@ class PdoLutadorRepository implements ILutadorRepository
             ]);
             $this->conexao->commit();
         }catch(PDOException $e) {
-            echo $e->getMessage();
+            $insertComExito =  $e->getMessage();
             $this->conexao->rollBack();
         }
-        return $insertInBdLutador && $insertInBdEstatisticas;
+        return $insertComExito;
     }
     
     public function update(Lutador $lutador): bool

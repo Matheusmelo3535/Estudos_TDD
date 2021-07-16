@@ -94,8 +94,14 @@
                 </div>
             </form>
             <?php
-                if (isset($teste)) {
-                    echo $teste;
+                if (isset($adicionouNoBanco)) 
+                {
+                    if($adicionouNoBanco === '')
+                    {
+                        echo '<script language="javascript">';
+                        echo 'window.location.href = "index.php"';
+                        echo '</script>';
+                    }
                 }
             ?>
         </div>
