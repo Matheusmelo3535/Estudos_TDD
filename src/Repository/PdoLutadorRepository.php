@@ -119,7 +119,7 @@ class PdoLutadorRepository implements ILutadorRepository
     public function insert(Lutador $lutador)
     {
         try{
-            $insertComExito = '';
+            $insertComExito = 'Ok';
             $this->conexao->beginTransaction();
             $sqlInsertLutadores = 'INSERT INTO Lutadores (nome, data_nascimento, created) 
                         VALUES (:nome, :data_nascimento, :created);';

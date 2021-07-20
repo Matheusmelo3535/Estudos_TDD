@@ -43,27 +43,28 @@ $(function() {
         window.location.href = "index.php";
     });
 
-    $('.add-atleta').click(function(e) {
+    $('.form-add-atleta').submit(function(e) {
         e.preventDefault();
-        let atletaNovo = getAtletaFromForm(formAddAtleta);
-        let validacao = validaDadosForm(atletaNovo);
-        if(!validacao) {
-            alert('Dados inválidos, tente novamente.');
-            return;
-        }
-        $("#formAddAtleta").submit();
-        // let rankOcupado = false;
-        // lutadores.forEach(lutador => {
-        //     if(lutador[0] == atletaNovo[0]){
-        //         alert('Este rank está ocupado!');
-        //         rankOcupado = true;
-        //     }
-            
-        // });
-        // if(!rankOcupado) {
-        //     localStorage.setItem('novoAtleta', atletaNovo);
-        //     alert('Atleta Cadastrado com êxito');
-        // }
+        $.ajax({
+            type: "POST",
+            url: 'addLutador.php',
+            data: $(this).serialize(),
+            success: function(response)
+            {
+                console.log(response);
+                let jsonDados = JSON.parse(response);
+                console.log(jsonDados);
+                
+                if(jsonDados.success == 'Ok')
+                {
+                    alert('CADASTROU COM EXITO');
+                }
+                else {
+                    alert('NÃO DEU CERTO');
+                }
+            }
+        });
+        
     })
 
 })
