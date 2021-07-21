@@ -106,7 +106,8 @@ class PdoLutadorRepository implements ILutadorRepository
         return $this->conexao->query(
             "SELECT e.ranking, l.nome, e.vitorias, e.derrotas, l.id as lutadorId FROM Lutadores l 
             INNER JOIN Estatisticas e 
-            ON l.id = e.lutador_id LIMIT $offset, $qtdPorPagina;")->fetchAll();
+            ON l.id = e.lutador_id ORDER BY CASE WHEN e.ranking = 'C' THEN 1 ELSE 2 END, e.ranking 
+            LIMIT $offset, $qtdPorPagina;")->fetchAll();
     }
 
     public function QtdLutadores()

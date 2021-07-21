@@ -1,18 +1,6 @@
 let rankingsDisponiveis = [1, 2, 3, 4 ,5 ,6 ,7 ,8 ,9 ,10 ,11, 12, 13, 14, 15];
 let selectFormAtleta = document.querySelector('.form-select');
 let formAddAtleta = document.querySelector('.form-add-atleta');
-// addOptions(selectFormAtleta);
-
-// function addOptions(selectForm)
-// {
-//     for(i = 0; i < rankingsDisponiveis.length; i++){
-//         let option = document.createElement('option');
-//         option.textContent = rankingsDisponiveis[i];
-//         selectForm.append(option);  
-//     }
-    
-// }
-
 
 function getAtletaFromForm(form) {
     let novoAtleta = {
@@ -54,6 +42,7 @@ function validaDadosForm(atleta) {
 
 function exibeErros(erros) {
     var UlError = document.querySelector("#validacaoAtleta");
+    UlError.innerHTML = "";
         erros.forEach(erro => {
             var LiError = document.createElement("li");
             LiError.textContent = erro;
@@ -65,40 +54,10 @@ function exibeErros(erros) {
 
 
 $(document).ajaxStop(function() {
-    
     $('.cancel-atleta').click(function(e) {
         e.preventDefault();
         $('.form-add-atleta').trigger("reset");
     });
-    
-    // $('.form-add-atleta').submit(function(e) {
-    //     e.preventDefault();
-    //     e.stopImmediatePropagation();
-    //     let validacao = validaDadosForm(getAtletaFromForm(this));
-    //     console.log(validacao);
-    //     if (validacao) {
-    //         $.ajax({
-    //             type: "POST",
-    //             url: 'addLutador.php',
-    //             data: $(this).serialize(),
-    //             success: function(response)
-    //             {
-    //                 let jsonDados = JSON.parse(response);
-                    
-    //                 if(jsonDados.success == 'Ok')
-    //                 {
-    //                     $('#contentAjax').load('tabela.php');
-    //                 }
-    //                 else {
-    //                     alert('Não foi possível adicionar.');
-    //                 }
-    //             }
-    //         });
-    //     }
-    //     else {
-    //         alert('Não envie campos em branco.');
-    //     }
-    // })
 });
 
 
@@ -132,7 +91,7 @@ $(document).on("submit", '.form-add-atleta', function(e) {
                         $('#contentAjax').load('tabela.php');
                     }
                     else {
-                        alert('Não foi possível adicionar.');
+                        bootbox.alert("Lutador ou rank já existentes.");
                     }
                 }
             });
@@ -144,18 +103,36 @@ $(document).on("submit", '.form-add-atleta', function(e) {
 
 $(document).on("click", '#viewLutador', function(e) {
     e.preventDefault();
-    $.ajax({
-        type: "GET",
-        url: 'viewAtleta.php',
-        data: {
-            idView: this.dataset.id
-        },
-        success: function(response) {
-           console.log(this);
-            
-        }
-        
-    });
+    let data = this.dataset.id;
+    $('#contentAjax').load('viewAtleta.php?idView='+ data);
 });
+
+
+$(document).on("click", '#deleteLutador', function(e) {
+    e.preventDefault();
+    let data = this.dataset.id;
+    bootbox.confirm("Tem certeza que deseja excluir esse Atleta?", function(result) {
+        if (result) {
+            $.ajax({
+                type: "POST",
+                url: 'deleteLutador.php',
+                data: {idDelete:data},
+                success: function(response) {
+                    let responseData = JSON.parse(response);
+        
+                    if (responseData.success === 'Ok') {
+                        bootbox.alert('Exclusão realizada com êxito');
+                        $('#contentAjax').load('tabela.php');
+                    }
+                    else{
+                        bootbox.alert("Não foi possível excluir");
+                    }
+                }
+            });
+        }else{
+            bootbox.alert('Não foi excluido');
+        }
+    });
+})
 
 

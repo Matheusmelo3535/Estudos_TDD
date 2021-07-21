@@ -74,7 +74,7 @@
                 </div>
                 <div class="row mb-3">
                     <div class="col d-flex">
-                        <a class="add-atleta-link  me-2" href="formAtleta.php"><i class="fas fa-plus"></i></a>
+                        <a class="add-atleta-link  me-2"><i class="fas fa-plus"></i></a>
                         <span>Adicionar Atleta</span>
                     </div>
                 </div>
@@ -109,7 +109,7 @@
                                     <a id="viewLutador" data-id = <?= $lutador['lutadorId']; ?> class="m-2 view btn btn-primary">
                                         <i class="fas fa-eye"></i>
                                     </a>
-                                    <a class="m-2 delete btn btn-danger" onClick="return confirm('Tem certeza que deseja excluir?')" href="deleteLutador.php?idDelete=<?= $lutador['lutadorId']; ?>">
+                                    <a class="m-2 delete btn btn-danger" data-id = <?=$lutador['lutadorId'];?> id="deleteLutador">
                                         <i class="far fa-trash-alt"></i>
                                     </a>
                                     <a class="m-2 btn btn-success m-2 edit" href="editAtleta.php?idEdit=<?= $lutador['lutadorId']; ?>">
@@ -138,8 +138,8 @@
         </div>
     </footer>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.2/bootbox.min.js"></script>
     <script src="../assets/js/bootstrap.bundle.min.js"></script>
     <script src='../assets/js/form.js'></script>
-    <script src='../assets/js/viewAtleta.js'></script>
 </body>
 </html>

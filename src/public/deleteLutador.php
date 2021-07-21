@@ -2,10 +2,14 @@
 
 require_once __DIR__ . '../../PdoSetup.php';
 
-$id = $_GET['idDelete'];
-// $lutadorQueSeraDeletado = $CrudLutador->getById($id);
+$id = $_POST['idDelete'];
 $deletar = $CrudLutador->deleteLutador($id);
-// echo "<script>alert('DELETADO')</script>";
-header('Location: index.php');
+if ($deletar) {
+    echo json_encode(array('success' => 'Ok'));
+}
+else {
+    echo json_encode(array('success' => 'Fail'));
+}
+
 
 ?>

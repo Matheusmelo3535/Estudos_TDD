@@ -16,6 +16,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $estatisticas = new EstatisticasLutador(null, $vitorias, $derrotas, $rank);
     $lutador->setEstatisticas($estatisticas);
     var_dump($addNoBanco = $CrudLutador->editLutador($lutador));
-    print_r($lutador);
 }
 ?>
