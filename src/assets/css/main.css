@@ -92,3 +92,8 @@ footer span {
     line-height: 2;
 }
 
+
+.form-atleta-invalido {
+    color: red;
+}
+
